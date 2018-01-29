@@ -50,11 +50,14 @@ class PlantClassifier(object):
         self.img_size = args.img_size
         self.weights = 'imagenet'
         self.trainable = False
-        self.lr = 0.00008
-        self.epochs = 100
+        self.lr = args.learning_rate
+        self.epochs = 1
         self.num_classes = 240
         self.model = self.create_base_model(args)
         self.model_name = ""
+        self.save_model_path = ""
+        self.save_log_path = ""
+
 
         if(args.train_resnet):
             self.model_name = 'ResNet50_' + self.uid
@@ -92,7 +95,7 @@ class PlantClassifier(object):
         for layer in model.layers:
             layer.trainable = False
         model.add(Dense(4096, activation='relu', name='fc3'))
-        model.add(Dense(240, activation='softmax'))
+        model.add(Dense(self.num_classes, activation='softmax'))
         return model
 
     def rebase_base_model(self,model):
@@ -123,12 +126,13 @@ class PlantClassifier(object):
 
     def train(self, trainable=False):
         if(not trainable):
-            save_model_path = os.path.join('model' , self.model_name, self.model_name + '.h5')
-            save_log_path =  os.path.join('model' , self.model_name, self.model_name + '_log.csv')
+            self.save_model_path = os.path.join('model' , self.model_name, self.model_name + '.h5')
+            self.save_log_path =  os.path.join('model' , self.model_name, self.model_name + '_log.csv')
         else:
-            save_model_path = os.path.join('model' , self.model_name, self.model_name + '_2.h5')
-            save_log_path =  os.path.join('model' , self.model_name, self.model_name + '_log.csv')
-        sv = ModelCheckpoint(save_model_path,
+            self.model = load_model(self.save_model_path)
+            self.save_model_path = os.path.join('model' , self.model_name, self.model_name + '_2.h5')
+            self.save_log_path =  os.path.join('model' , self.model_name, self.model_name + '_log.csv')
+        sv = ModelCheckpoint(self.save_model_path,
                                     monitor='val_acc',
                                     verbose=1,
                                     save_best_only=True,
@@ -149,12 +153,20 @@ class PlantClassifier(object):
         # parallel_model = multi_gpu_model(model, gpus=2)
         self.model.compile(Adam(lr=self.lr), loss='categorical_crossentropy', metrics=['accuracy'])
 
-        csv_logger = CSVLogger(save_log_path, append=True, separator=',')
+        csv_logger = CSVLogger(self.save_log_path, append=True, separator=',')
         early_stopping = EarlyStopping(monitor='val_acc', patience=10)
         self.model.fit_generator(train_batches,steps_per_epoch = 100,validation_steps = 80,
                         validation_data=valid_batches, epochs=self.epochs, verbose=1, callbacks=[csv_logger, early_stopping, sv])
-        self.model.save(save_model_path)
+        self.model.save(self.save_model_path)
 
+    def evaluate(self):
+        if(os.path.exists(self.save_model_path)):
+            model = load_model(self.save_model_path)
+        else:
+            return
+        valid_batches = ImageDataGenerator().flow_from_directory(self.valid_path, target_size=(self.img_size ,self.img_size ), batch_size=self.batch_size)
+        scores = model.evaluate_generator(valid_batches, steps= len(valid_batches))
+        print("loss, acc", scores)
 
 args = parse()
 pc = PlantClassifier(args)
@@ -162,3 +174,4 @@ pc.train(trainable=False)
 pc.rebase_base_model(pc.model)
 pc.batch_size = 16
 pc.train(trainable=True)
+pc.evaluate()
