@@ -30,7 +30,6 @@ def parse():
     parser.add_argument('--learning_rate', type=float, default=0.00008, help='learning rate for training')
     parser.add_argument('--batch_size', type=int, default=64, help='batch size for training')
     parser.add_argument('--img_size', type=int, default=224, help='img width, height size')
-    parser.add_argument('--img_size', type=int, default=224, help='img width, height size')
     try:
         from argument import add_arguments
         parser = add_arguments(parser)
