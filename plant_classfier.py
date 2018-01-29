@@ -50,8 +50,8 @@ class PlantClassifier(object):
         self.img_size = args.img_size
         self.weights = 'imagenet'
         self.trainable = False
-        self.lr = 0.0005
-        self.epochs = 1000
+        self.lr = 0.00008
+        self.epochs = 100
         self.num_classes = 240
         self.model = self.create_base_model(args)
         self.model_name = ""
@@ -121,9 +121,13 @@ class PlantClassifier(object):
             model = self.add_custom_layers(model)
             return model
 
-    def train(self):
-        save_model_path = os.path.join('model' , self.model_name, self.model_name + '.h5')
-        save_log_path =  os.path.join('model' , self.model_name, self.model_name + '_log.csv')
+    def train(self, trainable=False):
+        if(not trainable):
+            save_model_path = os.path.join('model' , self.model_name, self.model_name + '.h5')
+            save_log_path =  os.path.join('model' , self.model_name, self.model_name + '_log.csv')
+        else:
+            save_model_path = os.path.join('model' , self.model_name, self.model_name + '_2.h5')
+            save_log_path =  os.path.join('model' , self.model_name, self.model_name + '_log.csv')
         sv = ModelCheckpoint(save_model_path,
                                     monitor='val_acc',
                                     verbose=1,
@@ -154,4 +158,7 @@ class PlantClassifier(object):
 
 args = parse()
 pc = PlantClassifier(args)
-pc.train()
+pc.train(trainable=False)
+pc.rebase_base_model(pc.model)
+pc.batch_size = 16
+pc.train(trainable=True)

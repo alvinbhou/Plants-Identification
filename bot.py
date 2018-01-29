@@ -19,7 +19,7 @@ from vis.visualization import visualize_saliency, visualize_cam, visualize_activ
 
 
 
-mDict = json.load(open('dict.json'))
+mDict = json.load(open('./plants_dict.json'))
 model_path = "./models/resnet50_model.h5"
 model = load_model(model_path)
 
