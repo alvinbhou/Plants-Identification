@@ -27,8 +27,9 @@ def parse():
     parser.add_argument('--valid_path',type=str, default='data/valid', help='valid data path')
     parser.add_argument('--train_resnet', default = True, action='store_true', help='whether train on ResNet50')
     parser.add_argument('--train_inception', action='store_true', help='whether train on InceptionResNetV2')
-    # parser.add_argument('--weights', default=None, help='model weight')
+    parser.add_argument('--learning_rate', type=float, default=0.00008, help='learning rate for training')
     parser.add_argument('--batch_size', type=int, default=64, help='batch size for training')
+    parser.add_argument('--img_size', type=int, default=224, help='img width, height size')
     parser.add_argument('--img_size', type=int, default=224, help='img width, height size')
     try:
         from argument import add_arguments
