@@ -43,20 +43,25 @@ usage: python bot.py TELEGRAM_KEY_TOKEN
 ![](/img/ResNet50_f_uf_log_acc.png)
 
 Training accuracy on 33372 images: 0.744375
+
 Testing accuracy on 8462 images: 0.64296875
 
 ### Boxing results
 Example on Helianthus annuus 向日葵
-![](/img/boxing-example.jpeg)
+
+![](/img/boxing_example.jpeg)
 
 ## Chatbot Demo
 * User uploads photo
+
 ![](https://i.imgur.com/nbrjfSH.png)
 
 * Feeling lucky! for random results
+
 ![](https://i.imgur.com/FgCWr6o.png)
 
 * Telegram app screenshot
+
 ![](https://i.imgur.com/fmMHAlo.png)
 
 
