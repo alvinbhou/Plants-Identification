@@ -29,6 +29,7 @@ def parse():
     parser.add_argument('--train_inception', action='store_true', help='whether train on InceptionResNetV2')
     parser.add_argument('--learning_rate', type=float, default=0.00008, help='learning rate for training')
     parser.add_argument('--batch_size', type=int, default=64, help='batch size for training')
+    parser.add_argument('--epoch', type=int, default=100, help='epochs for training')
     parser.add_argument('--img_size', type=int, default=224, help='img width, height size')
     try:
         from argument import add_arguments
@@ -51,7 +52,7 @@ class PlantClassifier(object):
         self.weights = 'imagenet'
         self.trainable = False
         self.lr = args.learning_rate
-        self.epochs = 100
+        self.epochs = args.epoch
         self.num_classes = 240
         self.model = self.create_base_model(args)
         self.model_name = ""
