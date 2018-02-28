@@ -51,7 +51,7 @@ class PlantClassifier(object):
         self.weights = 'imagenet'
         self.trainable = False
         self.lr = args.learning_rate
-        self.epochs = 1
+        self.epochs = 100
         self.num_classes = 240
         self.model = self.create_base_model(args)
         self.model_name = ""
