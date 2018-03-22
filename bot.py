@@ -31,7 +31,8 @@ def getUser(chat_id):
     return None
 
 def formatMsg(msg):
-    info = '我們預測該照片可能是\n'
+    # info = '我們預測該照片可能是\n'
+    info = 'Most likely result..\n'
     reply =  info + '『' + str(msg) + '』'
     return reply
 
@@ -136,7 +137,7 @@ class PRBot(telepot.aio.helper.ChatHandler):
             print(chat_id, msg) 
 
             if msg == '/start':
-                await self.sender.sendMessage( "您好！請隨意上傳照片會進行植物分類預測 :)", reply_markup=service_keyboard)
+                await self.sender.sendMessage( "您好！請隨意上傳照片會進行植物分類預測\n Hi there! Upload any photo and see the classification result! :)", reply_markup=service_keyboard)
             elif msg == 'Help' or msg == '/help':
                 await self.sender.sendMessage( "Project Github: https://github.com/CryoliteZ/Plants-Identification", reply_markup=service_keyboard)
             elif msg == 'Feeling lucky!':
@@ -149,6 +150,7 @@ class PRBot(telepot.aio.helper.ChatHandler):
                 imsave('sample-img/bbox_img.png', bbox_img)
                 await self.sender.sendPhoto(open('sample-img/bbox_img.png', 'rb')) 
                 await self.sender.sendMessage( formatMsg(result), reply_markup=service_keyboard)
+                os.remove(os.path.join('sample-img', 'bbox_img.png'))
         return
 
             
