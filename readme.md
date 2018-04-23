@@ -58,7 +58,8 @@ Example on Helianthus annuus 向日葵
 
 * GIF demo
 
-![](https://im.ezgif.com/tmp/ezgif-1-ea6b68fcde.gif)
+<img src="/img/bot.gif" width="400" />
+
 
 * User uploads photo
 
