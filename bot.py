@@ -1,8 +1,9 @@
 # !/usr/bin/python 
 # -*-coding:utf-8 -*- 
 import sys, os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
-from scipy.misc import imread, imsave, imresize
+os.environ['CUDA_VISIBLE_DEVICES'] = ''
+# from scipy.misc import imread, imsave, imresize
+from PIL import Image
 from scipy import signal
 import time, datetime, random
 import re, requests, json
@@ -17,7 +18,7 @@ from keras.models import Model, load_model
 from vis.visualization import visualize_saliency, visualize_cam, visualize_activation
 
 mDict = json.load(open('./plants_dict.json'))
-model_path = "./models/ResNet50_t3_2.h5"
+model_path = "./model/ResNet50_t3_2.h5"
 model = load_model(model_path)
 
 class User:
@@ -66,7 +67,7 @@ def boxing(img, label):
     maxBottom = int(maxBottom/3)
     maxLeft = int(maxLeft/3)
     maxRight = int(maxRight/3)
-
+    img = img.copy()
     for h in range(224):
         for w in range(224):
             if (int(h/3) == maxTop and int(w/3) in range(maxLeft, maxRight)) or (int(h/3) == maxBottom and int(w/3) in range(maxLeft, maxRight)) or (int(w/3) == maxRight and int(h/3) in range(maxTop, maxBottom))  or (int(w/3) == maxLeft and int(h/3) in range(maxTop, maxBottom)):
@@ -100,11 +101,11 @@ class PRBot(telepot.aio.helper.ChatHandler):
         if content_type == 'photo':
             # download image and predict
             await bot.download_file(msg['photo'][-1]['file_id'], 'img/tmpImg.png')
-            img = imread('img/tmpImg.png', mode ='RGB')
-            img = imresize(img ,size=(224,224))
+            img = Image.open('img/tmpImg.png')
+            img = img.resize((224,224), Image.BILINEAR)
+            img = np.asarray(img)
             prob = model.predict(np.expand_dims(img, axis=0))
-            # class_idx = prob.argmax(axis=-1)
-
+            
             # get top 5
             sorted_idx = list(np.argsort(prob[0]))
             sorted_idx = sorted_idx[::-1]
@@ -117,8 +118,8 @@ class PRBot(telepot.aio.helper.ChatHandler):
             # boxing
             bbox_img = boxing(img,sorted_idx[0])
             save_img_name = '.' + str(chat_id) + '_bbox_img.png'
-            imsave(os.path.join('img', save_img_name), bbox_img)
-
+            result = Image.fromarray(bbox_img)
+            result.save(os.path.join('img', save_img_name))
             # send result
             await self.sender.sendPhoto(open(os.path.join('img', save_img_name), 'rb')) 
             await self.sender.sendMessage(formatMsg(top_result))
