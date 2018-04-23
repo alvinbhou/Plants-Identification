@@ -57,6 +57,7 @@ Example on Helianthus annuus 向日葵
 ## Chatbot Demo Screenshots
 
 * GIF demo
+
 ![](https://im.ezgif.com/tmp/ezgif-1-ea6b68fcde.gif)
 
 * User uploads photo
