@@ -143,8 +143,11 @@ class PRBot(telepot.aio.helper.ChatHandler):
                 await self.sender.sendMessage( "Project Github: https://github.com/CryoliteZ/Plants-Identification", reply_markup=service_keyboard)
             elif msg == 'Feeling lucky!':
                 filename = random.choice(sampleImgs)
-                img = imread( os.path.join('sample-img', filename), mode ='RGB')
-                img = imresize(img ,size=(224,224))
+                # img = imread( os.path.join('sample-img', filename), mode ='RGB')
+                img = Image.open( os.path.join('sample-img', filename))
+                img = img.resize((224,224), Image.BILINEAR)
+                img = np.asarray(img)
+                # img = imresize(img ,size=(224,224))
                 label = int(filename[:-4])
                 result = getKeybyVal(mDict, label)
                 bbox_img = boxing(img,(label))
