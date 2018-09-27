@@ -4,6 +4,9 @@ Plants identification on [240 categories](plants.csv) Taiwan endemic plants with
 
 Designed an easy-to-use chatbot on Telegram for users to upload photos of plants and get instant boxing and predicted category result.
 
+### Demo Telegram Chatbot
+[<img src="http://icons.iconarchive.com/icons/froyoshark/enkel/64/Telegram-icon.png">](https://t.me/Plant_Classification_Bot) [Plant Classification Bot](https://t.me/Plant_Classification_Bot)
+
 ## Usage
 
 plant_classifier.py
@@ -51,7 +54,13 @@ Example on Helianthus annuus 向日葵
 
 ![](/img/boxing_example.jpeg)
 
-## Chatbot Demo
+## Chatbot Demo Screenshots
+
+* GIF demo
+
+<img src="/img/bot.gif" width="400" />
+
+
 * User uploads photo
 
 ![](https://i.imgur.com/nbrjfSH.png)
