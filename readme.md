@@ -1,6 +1,6 @@
 # Plants-Identification
 ## Project Info
-Plants identification on [240 categories](plants.csv) plants with a dataset size of 41834 iamges. Trained on ResNet50 with pre-trained weights from imagenet.
+Plants identification on [240 categories](plants.csv) Taiwan endemic plants with a dataset size of 41834 iamges. Trained on ResNet50 with pre-trained weights from imagenet.
 
 Designed an easy-to-use chatbot on Telegram for users to upload photos of plants and get instant boxing and predicted category result.
 
@@ -64,4 +64,8 @@ Example on Helianthus annuus 向日葵
 
 ![](https://i.imgur.com/fmMHAlo.png)
 
-
+## Contributors
+|||
+|:-:|:-:|
+|Franklyn Chen |Help building up this project, putting in huge effort fine-tuning the model and wrote the boxing script|
+|ITRI|Providing ideas, supports and the dataset|
