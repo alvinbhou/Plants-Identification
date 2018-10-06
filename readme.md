@@ -47,7 +47,10 @@ usage: python bot.py TELEGRAM_KEY_TOKEN
 
 Training accuracy on 33372 images: 0.744375
 
-Testing accuracy on 8462 images: 0.64296875
+Testing accuracy on 8374 images: 0.64296875
+
+Testing Top 5 accuracy 8374 images: 0.81634120
+
 
 ### Boxing results
 Example on Helianthus annuus 向日葵
