@@ -43,6 +43,10 @@ usage: python bot.py TELEGRAM_KEY_TOKEN
 
 ### Classification results
 
+* Trained the model for 57 epochs freezing the Resnet layers
+
+* Trained the model for more epochs (until early stop) unfreezing the Resnet layers
+
 ![](/img/ResNet50_f_uf_log_acc.png)
 
 Training accuracy on 33372 images: 0.744375
