@@ -83,5 +83,5 @@ Example on Helianthus annuus 向日葵
 ## Contributors
 |Contributor|Contribute|
 |:-:|:-:|
-|Franklyn Chen |Help building up this project, putting in huge effort fine-tuning the model and wrote the boxing script|
-|ITRI|Providing ideas, supports and the dataset|
+|[Franklyn Chen](https://github.com/franklynChen) |Help building up this project, putting in huge effort fine-tuning the model and wrote the boxing script|
+|[ITRI](https://www.itri.org.tw/eng/)|Providing ideas, supports and the dataset|
